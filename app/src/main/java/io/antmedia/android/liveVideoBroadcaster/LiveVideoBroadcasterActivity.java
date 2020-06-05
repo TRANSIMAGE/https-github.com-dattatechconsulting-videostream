@@ -31,7 +31,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,7 +50,6 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
     private static final String TAG = LiveVideoBroadcasterActivity.class.getSimpleName();
     private ViewGroup mRootView;
     boolean mIsRecording = false;
-    private EditText mStreamNameEditText;
     private Timer mTimer;
     private long mElapsedTime;
     public TimerHandler mTimerHandler;
@@ -98,7 +100,6 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_live_video_broadcaster);
 
         mTimerHandler = new TimerHandler();
-        mStreamNameEditText = (EditText) findViewById(R.id.stream_name_edit_text);
 
         mRootView = (ViewGroup)findViewById(R.id.root_layout);
         mSettingsButton = (ImageButton)findViewById(R.id.settings_button);
@@ -226,13 +227,44 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         }
 
     }
+    public static String getWifiMacAddress() {
+        try {
+            String interfaceName = "wlan0";
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                if (!intf.getName().equalsIgnoreCase(interfaceName)){
+                    continue;
+                }
 
+                byte[] mac = intf.getHardwareAddress();
+                if (mac==null){
+                    return "";
+                }
+
+                StringBuilder buf = new StringBuilder();
+                for (byte aMac : mac) {
+                    buf.append(String.format("%02X:", aMac));
+                }
+                if (buf.length()>0) {
+                    buf.deleteCharAt(buf.length() - 1);
+                }
+                return buf.toString();
+            }
+        } catch (Exception ex) { } // for now eat exceptions
+        return "";
+    }
     public void toggleBroadcasting(View v) {
         if (!mIsRecording)
         {
             if (mLiveVideoBroadcaster != null) {
                 if (!mLiveVideoBroadcaster.isConnected()) {
-                    String streamName = mStreamNameEditText.getText().toString();
+                    String mac = getWifiMacAddress(); //mStreamNameEditText.getText().toString();
+
+                    String streamName = mac.replace(":","_");
+                    if (streamName.isEmpty())
+                    {
+                        streamName = "TEST";
+                    }
 
                     new AsyncTask<String, String, Boolean>() {
                         ContentLoadingProgressBar

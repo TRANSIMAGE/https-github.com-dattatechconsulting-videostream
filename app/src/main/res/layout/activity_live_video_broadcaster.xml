@@ -85,13 +85,7 @@
         android:padding="24dp"
         android:visibility="visible"
         >
-        <EditText
-            android:id="@+id/stream_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/stream_name"
-            android:textAppearance="?android:textAppearanceMedium"
-            />
+
         <Button
             android:id="@+id/toggle_broadcasting"
             android:layout_width="wrap_content"
