@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.antmedia.android.liveVideoBroadcaster">
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -23,19 +24,33 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <data
+                    android:scheme="http"
+                    android:host="videobroadcaster.com.s3-website-us-east-1.amazonaws.com" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
+            </intent-filter>
+            <!-- To open app using link -->
+
         </activity>
 
-        <activity android:name="io.antmedia.android.liveVideoBroadcaster.LiveVideoBroadcasterActivity"
+        <activity
+            android:name="io.antmedia.android.liveVideoBroadcaster.LiveVideoBroadcasterActivity"
             android:theme="@style/AppThemeDark"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:configChanges="orientation|keyboardHidden|screenSize" />
 
 
-        <activity android:name="io.antmedia.android.liveVideoPlayer.LiveVideoPlayerActivity"
-            android:theme="@style/AppThemeDark"
-            />
+        <activity
+            android:name="io.antmedia.android.liveVideoPlayer.LiveVideoPlayerActivity"
+            android:theme="@style/AppThemeDark" />
 
         <service android:name="io.antmedia.android.broadcaster.LiveVideoBroadcaster" />
     </application>

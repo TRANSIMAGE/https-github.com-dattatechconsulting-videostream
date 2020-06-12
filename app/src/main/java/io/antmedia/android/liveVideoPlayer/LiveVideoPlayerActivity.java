@@ -150,7 +150,12 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements OnClic
     simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
     simpleExoPlayerView.setControllerVisibilityListener(this);
     simpleExoPlayerView.requestFocus();
-
+    Bundle b = getIntent().getExtras();
+    if (b != null)
+    {
+      String predefinedURI = b.getString("preDefinedURI");
+      playPredefined(predefinedURI);
+    }
   }
 
   @Override
@@ -480,4 +485,11 @@ public class LiveVideoPlayerActivity extends AppCompatActivity implements OnClic
     initializePlayer(URL);
     videoStartControlLayout.setVisibility(View.GONE);
   }
+  public void playPredefined(String predefined) {
+    String URL = RTMP_BASE_URL + predefined;
+    //String URL = "http://192.168.1.34:5080/vod/streams/test_adaptive.m3u8";
+    initializePlayer(URL);
+    videoStartControlLayout.setVisibility(View.GONE);
+  }
+
 }
