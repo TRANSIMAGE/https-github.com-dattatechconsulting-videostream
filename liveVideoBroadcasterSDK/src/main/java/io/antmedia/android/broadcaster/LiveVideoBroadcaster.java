@@ -17,6 +17,7 @@ import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Build;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Process;
@@ -24,9 +25,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,6 +47,7 @@ import io.antmedia.android.broadcaster.network.IMediaMuxer;
 import io.antmedia.android.broadcaster.network.RTMPStreamer;
 import io.antmedia.android.broadcaster.utils.Resolution;
 import io.antmedia.android.broadcaster.utils.Utils;
+
 
 
 /**

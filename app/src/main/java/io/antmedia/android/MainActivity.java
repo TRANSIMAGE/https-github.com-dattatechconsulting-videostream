@@ -9,7 +9,14 @@ import android.view.View;
 
 
 import com.airbnb.deeplinkdispatch.DeepLink;
+import com.klinker.android.logger.OnLogListener;
+import com.klinker.android.send_message.ApnUtils;
+import com.klinker.android.send_message.BroadcastUtils;
+import com.klinker.android.send_message.Message;
+import com.klinker.android.send_message.Transaction;
+import com.klinker.android.send_message.Utils;
 
+import io.antmedia.android.AddNumber.AddNumberActivity;
 import io.antmedia.android.liveVideoBroadcaster.*;
 import io.antmedia.android.liveVideoPlayer.LiveVideoPlayerActivity;
 
@@ -52,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openVideoPlayer(View view) {
         Intent i = new Intent(this, LiveVideoPlayerActivity.class);
+        startActivity(i);
+    }
+
+    public void openAddNumber(View view) {
+        Intent i = new Intent(this, AddNumberActivity.class);
         startActivity(i);
     }
 }

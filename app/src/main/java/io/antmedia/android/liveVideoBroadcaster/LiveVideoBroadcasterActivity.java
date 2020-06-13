@@ -7,11 +7,14 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -22,7 +25,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -30,9 +36,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
@@ -46,6 +54,7 @@ import static io.antmedia.android.MainActivity.RTMP_BASE_URL;
 
 public class LiveVideoBroadcasterActivity extends AppCompatActivity {
 
+    public static final String MY_PREFS_NAME = "videobroadcastNumbersFile";
 
     private static final String TAG = LiveVideoBroadcasterActivity.class.getSimpleName();
     private ViewGroup mRootView;
@@ -227,6 +236,35 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         }
 
     }
+
+    void sendSmsMsgFnc(String mblNumVar, String smsMsgVar)
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+        {
+            try
+            {
+                SmsManager smsMgrVar = SmsManager.getDefault();
+                smsMgrVar.sendTextMessage(mblNumVar, null, smsMsgVar, null, null);
+                Toast.makeText(getApplicationContext(), "Message Sent",
+                        Toast.LENGTH_LONG).show();
+            }
+            catch (Exception ErrVar)
+            {
+                Toast.makeText(getApplicationContext(),ErrVar.getMessage().toString(),
+                        Toast.LENGTH_LONG).show();
+                ErrVar.printStackTrace();
+            }
+        }
+        else
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 10);
+            }
+        }
+    }
+
+
     public static String getWifiMacAddress() {
         try {
             String interfaceName = "wlan0";
@@ -253,14 +291,34 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
         } catch (Exception ex) { } // for now eat exceptions
         return "";
     }
+
+    public static boolean isValidPhoneNo(CharSequence iPhoneNo) {
+        return !TextUtils.isEmpty(iPhoneNo) &&
+                Patterns.PHONE.matcher(iPhoneNo).matches();
+    }
+
     public void toggleBroadcasting(View v) {
         if (!mIsRecording)
         {
             if (mLiveVideoBroadcaster != null) {
                 if (!mLiveVideoBroadcaster.isConnected()) {
                     String mac = getWifiMacAddress(); //mStreamNameEditText.getText().toString();
+                    Long tsLong = System.currentTimeMillis()/1000;
+                    String ts = tsLong.toString();
 
                     String streamName = mac.replace(":","_");
+                    streamName = streamName+ts;
+                    SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+                    String Phone1 = prefs.getString("Phone1", "No number defined");
+                    String Phone2 = prefs.getString("Phone2", "No number defined");
+                    String Phone3 = prefs.getString("Phone3", "No number defined");
+                    List<String> Phones = Arrays.asList(Phone1,Phone2,Phone3);
+
+                    for (String phone : Phones){
+                        if (isValidPhoneNo(phone)) {
+                            sendSmsMsgFnc(phone, "http://videobroadcaster.com.s3-website-us-east-1.amazonaws.com/" + streamName);
+                        }
+                    }
                     if (streamName.isEmpty())
                     {
                         streamName = "TEST";

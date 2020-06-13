@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -50,6 +51,10 @@
 
         <activity
             android:name="io.antmedia.android.liveVideoPlayer.LiveVideoPlayerActivity"
+            android:theme="@style/AppThemeDark" />
+
+        <activity
+            android:name="io.antmedia.android.AddNumber.AddNumberActivity"
             android:theme="@style/AppThemeDark" />
 
         <service android:name="io.antmedia.android.broadcaster.LiveVideoBroadcaster" />
