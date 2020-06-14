@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Camera;
+import android.icu.util.IslamicCalendar;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.AsyncTask;
@@ -38,6 +39,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
+
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +56,8 @@ import io.antmedia.android.broadcaster.utils.Resolution;
 import static io.antmedia.android.MainActivity.RTMP_BASE_URL;
 
 public class LiveVideoBroadcasterActivity extends AppCompatActivity {
+
+    CountryCodePicker ccp,ccp2,ccp3;
 
     public static final String MY_PREFS_NAME = "videobroadcastNumbersFile";
 
@@ -309,13 +314,20 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
                     String streamName = mac.replace(":","_");
                     streamName = streamName+ts;
                     SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                    String Phone1 = prefs.getString("Phone1", "No number defined");
-                    String Phone2 = prefs.getString("Phone2", "No number defined");
-                    String Phone3 = prefs.getString("Phone3", "No number defined");
-                    List<String> Phones = Arrays.asList(Phone1,Phone2,Phone3);
+                    String Phone1 = prefs.getString("Phone1", "");
+                    String Phone2 = prefs.getString("Phone2", "");
+                    String Phone3 = prefs.getString("Phone3", "");
+
+                    String Phone1_cc = prefs.getString("Phone1_cc", "1");
+                    String Phone2_cc = prefs.getString("Phone2_cc", "1");
+                    String Phone3_cc = prefs.getString("Phone3_cc", "1");
+
+
+
+                    List<String> Phones = Arrays.asList(Phone1+Phone1_cc,Phone2+Phone2_cc,Phone3+Phone3_cc);
 
                     for (String phone : Phones){
-                        if (isValidPhoneNo(phone)) {
+                        if (phone != null && isValidPhoneNo(phone)) {
                             sendSmsMsgFnc(phone, "http://videobroadcaster.com.s3-website-us-east-1.amazonaws.com/" + streamName);
                         }
                     }

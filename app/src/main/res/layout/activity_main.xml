@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:onClick="openAddNumber"
-        android:text="ADD NUMBER" />
+        android:text="EMERGENCY CONTACT" />
 
 
 </LinearLayout>

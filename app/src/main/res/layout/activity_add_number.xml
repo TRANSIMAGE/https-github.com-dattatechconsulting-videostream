@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <EditText
         android:id="@+id/editText4"
         android:layout_width="match_parent"
-        android:layout_height="242dp"
+        android:layout_height="190dp"
         android:autoText="false"
         android:clickable="false"
         android:editable="false"
@@ -15,42 +18,69 @@
         android:enabled="false"
         android:inputType="textPersonName"
         android:linksClickable="false"
-        android:text="Add Numbers"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
+        android:text="EMERGENCY CONTACTS"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp" />
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ccp_countryPreference="ca"
+        app:ccp_autoDetectCountry="true"
+        />
     <EditText
         android:id="@+id/phone1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="phone"
         android:ems="10"
         android:inputType="phone" />
-
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ccp_countryPreference="ca"
+        app:ccp_autoDetectCountry="true"
+        />
     <EditText
         android:id="@+id/phone2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone" />
-
+        android:hint="phone"
+        android:editable="false"
+        android:inputType="phone"
+        android:singleLine="true"/>
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:ccp_countryPreference="ca"
+        app:ccp_autoDetectCountry="true"
+        />
     <EditText
         android:id="@+id/phone3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="phone" />
+        android:hint="phone"
+        android:editable="false"
+        android:inputType="phone"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/save_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:onClick="save"
         android:text="Save" />
 
     <TextView
         android:id="@+id/validate"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="76dp"
         android:background="#FFFFFF"
-        android:textColor="#931D1D" />
+        android:textColor="#931D1D"
+        android:textSize="18sp" />
 </LinearLayout>
