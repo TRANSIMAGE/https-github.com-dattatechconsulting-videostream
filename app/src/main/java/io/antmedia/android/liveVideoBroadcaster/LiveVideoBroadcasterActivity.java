@@ -324,7 +324,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
 
 
 
-                    List<String> Phones = Arrays.asList(Phone1+Phone1_cc,Phone2+Phone2_cc,Phone3+Phone3_cc);
+                    List<String> Phones = Arrays.asList(Phone1_cc+Phone1, Phone2_cc+Phone2,Phone3_cc+Phone3);
 
                     for (String phone : Phones){
                         if (phone != null && isValidPhoneNo(phone)) {
