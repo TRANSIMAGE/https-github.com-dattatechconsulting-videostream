@@ -328,7 +328,7 @@ public class LiveVideoBroadcasterActivity extends AppCompatActivity {
 
                     for (String phone : Phones){
                         if (phone != null && isValidPhoneNo(phone)) {
-                            sendSmsMsgFnc(phone, "http://videobroadcaster.com.s3-website-us-east-1.amazonaws.com/" + streamName);
+                            sendSmsMsgFnc(phone, "http://dattatechconsultingvideo.com/" + streamName);
                         }
                     }
                     if (streamName.isEmpty())

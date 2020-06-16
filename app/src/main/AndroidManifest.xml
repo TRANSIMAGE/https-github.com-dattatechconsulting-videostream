@@ -33,7 +33,8 @@
             <intent-filter android:autoVerify="true">
                 <data
                     android:scheme="http"
-                    android:host="videobroadcaster.com.s3-website-us-east-1.amazonaws.com" />
+                    android:host="dattatechconsultingvideo.com"/>
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT"></category>
